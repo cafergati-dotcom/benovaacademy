@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BENOVA ACADEMY - نظام إدارة الأكاديمية</title>
+  
+  <!-- Google Fonts - Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS File -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header & Global Revenue -->
+  <header class="app-header">
+    <div class="header-title">
+      <h1>BENOVA ACADEMY 🏫</h1>
+      <p>Smart Education. Better Management.</p>
+    </div>
+    
+    <!-- Total Revenue Card -->
+    <div class="revenue-card">
+      <span class="revenue-label">المدخول الشهري الإجمالي المتوقع</span>
+      <span id="totalAcademyRevenue" class="revenue-amount">0 د.ج</span>
+    </div>
+  </header>
+
+  <!-- Main Navigation Tabs -->
+  <main class="main-container">
+    <div class="nav-tabs">
+      <button onclick="switchTab('teachers')" id="tab-teachers" class="tab-btn active">الأساتذة والأفواج</button>
+      <button onclick="switchTab('unpaid')" id="tab-unpaid" class="tab-btn">🔴 التلاميذ غير الدافعين</button>
+    </div>
+
+    <!-- TAB 1: TEACHERS & STUDENTS MANAGEMENT -->
+    <section id="section-teachers" class="tab-section">
+      
+      <!-- Add Teacher Form -->
+      <div class="card">
+        <h2 class="card-title text-indigo">➕ إضافة أستاذ جديد</h2>
+        <form onsubmit="addTeacher(event)" class="grid-form-3">
+          <input type="text" id="teacherFirstName" placeholder="الاسم" required class="form-input">
+          <input type="text" id="teacherLastName" placeholder="اللقب" required class="form-input">
+          <input type="number" id="teacherPrice" placeholder="سعر الحصة للتلميذ (د.ج)" required class="form-input">
+          <button type="submit" class="btn btn-primary full-width-grid">إضافة الأستاذ إلى السحابة</button>
+        </form>
+      </div>
+
+      <!-- Teachers List & Active Teacher View -->
+      <div class="grid-layout-2col">
+        
+        <!-- Left: Teachers List -->
+        <div class="card">
+          <h2 class="card-title">قائمة الأساتذة</h2>
+          <div id="teachersList" class="stack-list">
+            <p class="loading-text">جاري الاتصال بقاعدة البيانات السحابية...</p>
+          </div>
+        </div>
+
+        <!-- Right: Selected Teacher's Class & Students -->
+        <div class="card">
+          <div id="selectedTeacherHeader" class="teacher-header-placeholder">
+            <h2>اختر أستاذاً لعرض فوج التلاميذ</h2>
+          </div>
+
+          <!-- Add Student Form (Hidden until teacher selected) -->
+          <div id="addStudentSection" class="sub-card hidden">
+            <h3>➕ إضافة تلميذ لـ <span id="currentTeacherName"></span></h3>
+            <form onsubmit="addStudent(event)" class="flex-form">
+              <input type="text" id="studentFirstName" placeholder="اسم التلميذ" required class="form-input">
+              <input type="text" id="studentLastName" placeholder="لقب التلميذ" required class="form-input">
+              <button type="submit" class="btn btn-emerald">إضافة التلميذ</button>
+            </form>
+          </div>
+
+          <!-- Students Table -->
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>التلميذ</th>
+                  <th>الحضور / الغياب</th>
+                  <th>حالة الدفع</th>
+                  <th>المبلغ المستحق</th>
+                  <th>تسجيل سريع</th>
+                </tr>
+              </thead>
+              <tbody id="studentsTableBody">
+                <tr><td colspan="5" class="empty-table-msg">يرجى اختيار أستاذ من القائمة.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 2: UNPAID STUDENTS ONLY -->
+    <section id="section-unpaid" class="tab-section hidden">
+      <div class="card">
+        <h2 class="card-title text-red">🔴 قائمة التلاميذ غير الدافعين لهذا الشهر</h2>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr class="table-header-red">
+                <th>اسم التلميذ</th>
+                <th>الأستاذ</th>
+                <th>الحصص المحضورة</th>
+                <th>المبلغ المطلوب (د.ج)</th>
+                <th>الإجراء</th>
+              </tr>
+            </thead>
+            <tbody id="unpaidStudentsBody">
+              <!-- Dynamic unpaid content -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JavaScript Module File -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
